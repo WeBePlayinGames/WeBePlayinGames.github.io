@@ -1,27 +1,136 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>We Be Playin Games</title>
     <style>
-        body { 
-            background-color: #1a1a1a; 
-            color: #ffffff; 
-            font-family: sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            margin: 0; 
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f0f0f;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Prevents scrolling during welcome */
         }
-        .container { text-align: center; }
-        h1 { color: #00ff00; font-size: 3rem; }
-        p { font-size: 1.5rem; }
+
+        /* Welcome Screen Styling */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.8s ease;
+        }
+
+        #welcome-screen h1 {
+            font-size: 3rem;
+            color: #00ff00;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .enter-btn {
+            padding: 15px 30px;
+            background: #00ff00;
+            color: #000;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            border-radius: 5px;
+        }
+
+        /* Home Page Styling */
+        #home-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-btn {
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            background: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .main-btn:hover {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .visible { opacity: 1 !important; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>We Be Playin Games</h1>
-        <p>Site is under construction. Stay tuned!</p>
+
+    <div id="welcome-screen">
+        <h1>Welcome to WBPG</h1>
+        <button class="enter-btn" onclick="enterSite()">Enter Site</button>
     </div>
+
+    <div id="home-page">
+        <h2 style="margin-bottom: 40px;">WE BE PLAYIN GAMES</h2>
+        <div class="button-container">
+            <a href="#" class="main-btn">Games</a>
+            <a href="#" class="main-btn">Links</a>
+        </div>
+    </div>
+
+    <script>
+        const welcome = document.getElementById('welcome-screen');
+        const home = document.getElementById('home-page');
+
+        // Check if user has visited before
+        window.onload = function() {
+            if (localStorage.getItem('hasVisited')) {
+                // If they visited, skip welcome
+                welcome.classList.add('hidden');
+                home.classList.add('visible');
+                document.body.style.overflow = "auto";
+            }
+        };
+
+        function enterSite() {
+            // Mark as visited
+            localStorage.setItem('hasVisited', 'true');
+            
+            // Fade out welcome
+            welcome.style.opacity = '0';
+            
+            setTimeout(() => {
+                welcome.classList.add('hidden');
+                home.classList.add('visible');
+                document.body.style.overflow = "auto";
+            }, 800);
+        }
+    </script>
 </body>
 </html>
